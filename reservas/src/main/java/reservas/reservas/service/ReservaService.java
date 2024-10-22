@@ -16,14 +16,14 @@ import java.util.Optional;
 @Service
 public class ReservaService {
 
-    private List<Cliente> clientes = new ArrayList<>(); // Simulación de base de datos en memoria
+    private List<Cliente> clientes = new ArrayList<>();
 
     public Cliente agregarReserva(ClienteDTO clienteDTO, ReservaDTO reservaDTO) {
         Cliente cliente = buscarOCrearCliente(clienteDTO);
 
-        // Crear la reserva con el Builder
+
         Reserva nuevaReserva = crearReserva(reservaDTO, cliente);
-        cliente.agregarReserva(nuevaReserva); // Agregar la reserva al cliente
+        cliente.agregarReserva(nuevaReserva);
 
         return cliente;
     }
@@ -44,7 +44,7 @@ public class ReservaService {
             nuevoCliente.setApellido(clienteDTO.getApellido());
             nuevoCliente.setEmail(clienteDTO.getEmail());
             nuevoCliente.setTelefono(clienteDTO.getTelefono());
-            clientes.add(nuevoCliente); // Agregar cliente a la lista
+            clientes.add(nuevoCliente);
             return nuevoCliente;
         }
     }
@@ -52,11 +52,11 @@ public class ReservaService {
     private Reserva crearReserva(ReservaDTO reservaDTO, Cliente cliente) {
         ReservaBuilder builder = new ReservaBuilder(reservaDTO.getTipoReserva());
 
-        // Aplicar descuento usando el Singleton
+
         DescuentoSingleton descuentoSingleton = DescuentoSingleton.getInstancia();
         double costoConDescuento = descuentoSingleton.aplicarDescuento(reservaDTO.getCosto());
 
-        // Usar el builder para crear la reserva
+
         builder.setCliente(cliente)
                 .setFecha(new Date())
                 .setCosto(costoConDescuento);
@@ -80,7 +80,7 @@ public class ReservaService {
                 break;
         }
 
-        return builder.build(); // Retornar la reserva construida
+        return builder.build();
     }
 
     public List<Cliente> obtenerTodosLosClientes() {
